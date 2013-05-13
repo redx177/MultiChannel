@@ -9,6 +9,7 @@ public class Controller {
 	private Page openedPage;
 	private PageType currentPageType;
 
+	// Test
     public static void main(String[] args) {
 		new Controller().Start();
     }
