@@ -4,6 +4,8 @@ import ch.zhaw.multiChannel.model.*;
 import ch.zhaw.multiChannel.view.*;
 
 public class Controller {
+	
+	//das ist ein test
 
 	private StartPage startPage;
 	private Page openedPage;
