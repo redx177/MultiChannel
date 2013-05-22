@@ -7,8 +7,7 @@ public class AttachmentMessage extends Message {
 
 	private File[] attachments;
 
-	public AttachmentMessage(String[] receivers, String message, Date sendDate,
-			File[] attachments) {
+	public AttachmentMessage(String[] receivers, String message, Date sendDate, File[] attachments) {
 
 		super(receivers, message, sendDate);
 		this.attachments = attachments;
