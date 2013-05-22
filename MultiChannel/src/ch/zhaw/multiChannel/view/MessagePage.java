@@ -17,70 +17,70 @@ public class MessagePage implements Page {
 	private Controller controller;
 	String uhrzeit_String = new String();
 
-	JLabel empfaenger_lbl = new JLabel("Empfänger:");
-	JTextField empfaenger_txt = new JTextField(15);
-	JTextArea nachricht_txt = new JTextArea(15, 40);
-	JButton send_btn = new JButton("Nachricht senden");
-	JCheckBox zeitversetzt_cbox = new JCheckBox("Zeit versetzt senden?");
-	JTextField datum_txt = new JTextField(20);
-	JComboBox uhrzeit_auswahl;
+	JLabel receiverLabel = new JLabel("Empfänger:");
+	JTextField receiverText = new JTextField(15);
+	JTextArea messageText = new JTextArea(15, 40);
+	JButton sendButton = new JButton("Nachricht senden");
+	JCheckBox timeshiftBox = new JCheckBox("Zeit versetzt senden?");
+	JTextField dateTextField = new JTextField(20);
+	JComboBox timeComboBox;
 
 
-	JPanel hauptPanel = new JPanel();
-	JPanel obererPanel = new JPanel();
-	JPanel mittlererPanel = new JPanel();
-	JPanel untererPanel = new JPanel();
+	JPanel mainPanel = new JPanel();
+	JPanel upperPanel = new JPanel();
+	JPanel middlePanel = new JPanel();
+	JPanel lowerPanel = new JPanel();
 
-	JFrame hauptFrame = new JFrame();
+	JFrame mainFrame = new JFrame();
 
 	public MessagePage(Controller controller) {
 		this.controller = controller;
 	}
 
 	public void Show(String title) {
-		uhrzeit_auswahl = new JComboBox(getUhrzeitListe());
-		uhrzeit_auswahl.setEditable(false);
-		datum_txt.setText("sofort senden");
-		datum_txt.setEditable(false);
-		obererPanel.setLayout(new FlowLayout());
-		obererPanel.add(empfaenger_lbl);
-		obererPanel.add(empfaenger_txt);
+		timeComboBox = new JComboBox(getTimeList());
+		timeComboBox.setEditable(false);
+		dateTextField.setText("sofort senden");
+		dateTextField.setEditable(false);
+		upperPanel.setLayout(new FlowLayout());
+		upperPanel.add(receiverLabel);
+		upperPanel.add(receiverText);
 
-		mittlererPanel.setLayout(new FlowLayout());
-		mittlererPanel.add(nachricht_txt);
+		middlePanel.setLayout(new FlowLayout());
+		middlePanel.add(messageText);
 
-		untererPanel.setLayout(new FlowLayout());
-		untererPanel.add(zeitversetzt_cbox);
-		untererPanel.add(datum_txt);
-		untererPanel.add(uhrzeit_auswahl);
-		untererPanel.add(send_btn);
+		lowerPanel.setLayout(new FlowLayout());
+		lowerPanel.add(timeshiftBox);
+		lowerPanel.add(dateTextField);
+		lowerPanel.add(timeComboBox);
+		lowerPanel.add(sendButton);
 
-		hauptPanel.setSize(600, 700);
-		hauptPanel.setLayout(new BorderLayout());
-		hauptPanel.add(BorderLayout.NORTH, obererPanel);
-		hauptPanel.add(BorderLayout.WEST, mittlererPanel);
-		hauptPanel.add(BorderLayout.SOUTH, untererPanel);
+		mainPanel.setSize(600, 700);
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(BorderLayout.NORTH, upperPanel);
+		mainPanel.add(BorderLayout.WEST, middlePanel);
+		mainPanel.add(BorderLayout.SOUTH, lowerPanel);
 
-		hauptFrame.getContentPane().add(hauptPanel);
-		hauptFrame.setSize(600, 500);
-		hauptFrame.setVisible(true);
-		hauptFrame.setTitle(title);
-		hauptFrame.pack();
+		mainFrame.getContentPane().add(mainPanel);
+		mainFrame.setSize(600, 500);
+		mainFrame.setVisible(true);
+		mainFrame.setTitle(title);
+		mainFrame.pack();
 
-		hauptFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		zeitversetzt_cbox.addActionListener(new ActionListener() {
+		timeshiftBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent datum) {
-				if (zeitversetzt_cbox.isSelected()) {
-					datum_txt.setText(new DatePicker(hauptFrame).setPickedDate());
-					uhrzeit_auswahl.setEditable(true);
+				if (timeshiftBox.isSelected()) {
+					dateTextField.setText(new DatePicker(mainFrame).setPickedDate());
+					timeComboBox.setEditable(true);
 				} else {
-					datum_txt.setText("Zeitversetzt senden?");
-					uhrzeit_auswahl.setEditable(false);
+					dateTextField.setText("Zeitversetzt senden?");
+					timeComboBox.setEditable(false);
 				}
 			}
 		});
-		send_btn.addActionListener(new ActionListener() {
+		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.SendMessageRequest();
 			}
@@ -88,33 +88,33 @@ public class MessagePage implements Page {
 	}
 
 	public boolean IsVisible() {
-		return hauptFrame.isVisible();
+		return mainFrame.isVisible();
 	}
 
 	public Message GetMessage() {
-		String[] empfaenger = empfaenger_txt.getText().split(";");
-		String nachricht = nachricht_txt.getText();
-		if (!zeitversetzt_cbox.isSelected()) {
-			return new Message(empfaenger, nachricht);
+		String[] receivers = receiverText.getText().split(";");
+		String message = messageText.getText();
+		if (!timeshiftBox.isSelected()) {
+			return new Message(receivers, message);
 		} else {
 			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 			Date date;
 			try {
-				date = format.parse(datum_txt.getText() + " " + uhrzeit_auswahl.getSelectedItem());
+				date = format.parse(dateTextField.getText() + " " + timeComboBox.getSelectedItem());
 			} catch (ParseException e) {
 				e.printStackTrace();
 				return null;
 			}
 
-			return new Message(empfaenger, nachricht, date);
+			return new Message(receivers, message, date);
 		}
 	}
 
 	public void Close() {
-		hauptFrame.dispose();
+		mainFrame.dispose();
 	}
 
-	private Vector<String> getUhrzeitListe() {
+	private Vector<String> getTimeList() {
 		Vector<String> uhrzeit_liste = new Vector<String>();
 
 		for (int h = 0; h < 24; h++) {
