@@ -5,8 +5,6 @@ import ch.zhaw.multiChannel.view.*;
 
 public class Controller {
 	
-	//das ist ein test
-
 	private StartPage startPage;
 	private Page openedPage;
 	private PageType currentPageType;

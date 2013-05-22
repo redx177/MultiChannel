@@ -75,7 +75,7 @@ public class MessagePage implements Page {
 					datum_txt.setText(new DatePicker(hauptFrame).setPickedDate());
 					uhrzeit_auswahl.setEditable(true);
 				} else {
-					datum_txt.setText("");
+					datum_txt.setText("Zeitversetzt senden?");
 					uhrzeit_auswahl.setEditable(false);
 				}
 			}
