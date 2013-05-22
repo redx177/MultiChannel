@@ -2,8 +2,15 @@ package ch.zhaw.multiChannel.model;
 
 public class MmsValidator {
 	
-	public void validate(){
+	private AttachmentMessage attachmentMessage;
+	
+	public MmsValidator(AttachmentMessage attachmentMessage){
 		
+		this.attachmentMessage = attachmentMessage;
+	}
+	
+	public boolean validate(){
+		return true;
 	}
 
 }
