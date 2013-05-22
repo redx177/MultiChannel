@@ -10,6 +10,7 @@ public class MmsValidator {
 	}
 	
 	public boolean validate(){
+		
 		return true;
 	}
 

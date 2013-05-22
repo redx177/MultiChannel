@@ -12,7 +12,29 @@ public class SmsValidator {
 
 	public boolean validate() {
 
-		return true;
+		return validateReceivers();
 
+	}
+
+	private boolean validateReceivers() {
+		int numberOfReceiver = message.getReceivers().length;
+		String[] receivers = message.getReceivers();
+		for (int i = 0; i <= numberOfReceiver; i++) {
+			if (receivers[i] == null || !isInteger(receivers[i])) {
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+	private boolean isInteger(String input) {
+		try {
+			Integer.parseInt(input);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }
