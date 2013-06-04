@@ -9,4 +9,5 @@ public interface Page {
 	public Message getMessage();
 	public void close();
 	void showError(String errorMessage);
+	void showNotification(String message);
 }

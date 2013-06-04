@@ -129,6 +129,10 @@ public class MessagePage implements Page {
 		JOptionPane.showMessageDialog(mainFrame, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
+	public void showNotification(String errorMessage) {
+		JOptionPane.showMessageDialog(mainFrame, errorMessage, "Danke", JOptionPane.INFORMATION_MESSAGE);
+	}
+
 	private Vector<String> getTimeList() {
 		Vector<String> uhrzeit_liste = new Vector<String>();
 

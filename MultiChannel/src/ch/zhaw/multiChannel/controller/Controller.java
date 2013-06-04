@@ -64,6 +64,29 @@ public class Controller {
 	public void sendMessageRequest() {
 		Message message = openedPage.getMessage();
 
+		Validator validator = null;
+		try {
+			validator = getValidator(message);
+		} catch (Exception e) {
+			openedPage.showError(e.getMessage());
+		}
+
+		if (!validator.isValid()) {
+			openedPage.showError(validator.getErrorMessage());
+			return;
+		}
+
+		if (currentPageType == PageType.Mms || currentPageType == PageType.Email) {
+			new Sender().send(currentPageType, (AttachmentMessage)message);
+		} else {
+			new Sender().send(currentPageType, message);
+		}
+
+		openedPage.showNotification("Vielen Dank, Ihre Nachricht wurde versendet.");
+		openedPage.close();
+	}
+
+	private Validator getValidator(Message message) throws Exception {
 		Validator validator;
 		switch (currentPageType) {
 			case Sms:
@@ -79,18 +102,12 @@ public class Controller {
 				validator = new EmailValidator((AttachmentMessage) message);
 				break;
 			default:
-				System.out.println("Unknown page type " + currentPageType);
-				return;
-
-			new Sender().send(message);
+				throw new Exception("Unknown page type " + currentPageType);
 		}
-
-		if (!validator.isValid()) {
-			openedPage.showError(validator.getErrorMessage());
-		}
+		return validator;
 	}
 
-	private enum PageType {
+	public enum PageType {
 		Sms,
 		Mms,
 		Email,
