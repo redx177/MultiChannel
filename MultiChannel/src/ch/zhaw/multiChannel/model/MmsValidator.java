@@ -19,11 +19,11 @@ public class MmsValidator {
 			
 		for(File currentFile : attachmentMessage.getAttachments()){
 			if(currentFile.canExecute()){
-				errorMessage="Exe können nicht verschickt werden!";
+				errorMessage="Exe kÃ¶nnen nicht verschickt werden!";
 				return false;
 			}
 			if(currentFile.length() > 5242880){
-				errorMessage="File ist grösser als 5MB!";
+				errorMessage="File ist grÃ¶sser als 5MB!";
 				return false;
 			}
 			

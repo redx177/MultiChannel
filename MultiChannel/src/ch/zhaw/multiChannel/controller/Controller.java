@@ -29,12 +29,31 @@ public class Controller {
 		openMessagePage("Fax");
 	}
 
+	public void ComposeMms() {
+		currentPageType = PageType.Mms;
+		openAttachmentMessagePage("MMS");
+	}
+
+	public void ComposeEmail() {
+		currentPageType = PageType.Email;
+		openAttachmentMessagePage("E-Mail");
+	}
+
 	private void openMessagePage(String title) {
 		if (openedPage != null && openedPage.IsVisible()) {
 			startPage.ShowOnlyOnePageMessage();
 			return;
 		}
 		openedPage = new MessagePage(this);
+		openedPage.Show(title);
+	}
+
+	private void openAttachmentMessagePage(String title) {
+		if (openedPage != null && openedPage.IsVisible()) {
+			startPage.ShowOnlyOnePageMessage();
+			return;
+		}
+		openedPage = new AttachmentMessagePage(this);
 		openedPage.Show(title);
 	}
 

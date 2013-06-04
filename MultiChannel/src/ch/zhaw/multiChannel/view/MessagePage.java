@@ -30,6 +30,7 @@ public class MessagePage implements Page {
 	JPanel upperPanel = new JPanel();
 	JPanel middlePanel = new JPanel();
 	JPanel lowerPanel = new JPanel();
+	JPanel additionalPanel = new JPanel();
 
 	JFrame mainFrame = new JFrame();
 
@@ -49,11 +50,9 @@ public class MessagePage implements Page {
 		middlePanel.setLayout(new FlowLayout());
 		middlePanel.add(messageText);
 
-		lowerPanel.setLayout(new FlowLayout());
-		lowerPanel.add(timeshiftBox);
-		lowerPanel.add(dateTextField);
-		lowerPanel.add(timeComboBox);
-		lowerPanel.add(sendButton);
+		JPanel sendTimePanel = new JPanel();
+		sendTimePanel.setLayout(new FlowLayout());
+		loadSendTimePanel(lowerPanel);
 
 		mainPanel.setSize(600, 700);
 		mainPanel.setLayout(new BorderLayout());
@@ -85,6 +84,14 @@ public class MessagePage implements Page {
 				controller.SendMessageRequest();
 			}
 		});
+	}
+
+	protected void loadSendTimePanel(JPanel panel) {
+		panel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
+		panel.add(timeshiftBox);
+		panel.add(dateTextField);
+		panel.add(timeComboBox);
+		panel.add(sendButton);
 	}
 
 	public boolean IsVisible() {

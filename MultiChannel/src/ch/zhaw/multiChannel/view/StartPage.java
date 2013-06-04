@@ -49,7 +49,18 @@ public class StartPage {
 		});
 
 		JButton mms = new JButton("MMS");
+		mms.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.ComposeMms();
+			}
+		});
+
 		JButton email = new JButton("Email");
+		email.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.ComposeEmail();
+			}
+		});
 
 		JButton fax = new JButton("Fax");
 		fax.addActionListener(new ActionListener() {
