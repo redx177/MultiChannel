@@ -1,45 +1,37 @@
 package ch.zhaw.multiChannel.model;
 
-public class SmsValidator {
+public class SmsValidator implements Validator {
 
 	private Message message;
+	private String errorMessage;
 
-	private SmsValidator(Message message) {
-
+	public SmsValidator(Message message) {
 		this.message = message;
-
 	}
 
-	public boolean validate() {
-
+	public boolean isValid() {
 		return validateReceivers();
+	}
 
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
 	private boolean validateReceivers() {
-		int numberOfReceiver = message.getReceivers().length;
 		String[] receivers = message.getReceivers();
-		String message = this.message.getMessage();
-		for (int i = 0; i <= numberOfReceiver; i++) {
-			if (receivers[i] == null || !isInteger(receivers[i])) {
+		for(String receiver : receivers) {
+			if (receiver == null || !ValidatorHelper.isInteger(receiver)) {
+				errorMessage = "Ungültiger Empfänger, nur Nummern erlaubt: " + receiver;
 				return false;
 			}
-			if (message.length() > 160) {
-				System.out.println("The message size exceedes the accepted size");
-				return false;
-			}
+		}
 
+		int messageLength = message.getMessage().length();
+		if (messageLength > 160) {
+			errorMessage = "Die Nachricht hat "+ messageLength +"/160 Zeichen.";
+			return false;
 		}
 
 		return true;
-	}
-
-	private boolean isInteger(String input) {
-		try {
-			Integer.parseInt(input);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 }

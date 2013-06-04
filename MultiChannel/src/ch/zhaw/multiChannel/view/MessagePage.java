@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Vector;
 
 
@@ -18,6 +17,7 @@ public class MessagePage implements Page {
 	String uhrzeit_String = new String();
 
 	JLabel receiverLabel = new JLabel("Empfänger:");
+	JLabel receiverInfoLabel = new JLabel("(separiert durch semikolon)");
 	JTextField receiverText = new JTextField(15);
 	JTextArea messageText = new JTextArea(15, 40);
 	JButton sendButton = new JButton("Nachricht senden");
@@ -38,7 +38,7 @@ public class MessagePage implements Page {
 		this.controller = controller;
 	}
 
-	public void Show(String title) {
+	public void show(String title) {
 		timeComboBox = new JComboBox(getTimeList());
 		timeComboBox.setEditable(false);
 		dateTextField.setText("sofort senden");
@@ -46,9 +46,9 @@ public class MessagePage implements Page {
 		upperPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		upperPanel.add(receiverLabel);
 		upperPanel.add(receiverText);
+		upperPanel.add(receiverInfoLabel);
 
 		middlePanel.setLayout(new BorderLayout());
-		middlePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		JScrollPane scrollMessageText = new JScrollPane(messageText);
 		middlePanel.add(scrollMessageText, BorderLayout.CENTER);
 
@@ -58,7 +58,6 @@ public class MessagePage implements Page {
 
 		mainPanel.setSize(600, 700);
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createDashedBorder(Color.RED));
 		mainPanel.add(BorderLayout.NORTH, upperPanel);
 		mainPanel.add(BorderLayout.CENTER, middlePanel);
 		mainPanel.add(BorderLayout.SOUTH, lowerPanel);
@@ -83,9 +82,10 @@ public class MessagePage implements Page {
 				}
 			}
 		});
+
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.SendMessageRequest();
+				controller.sendMessageRequest();
 			}
 		});
 	}
@@ -99,31 +99,34 @@ public class MessagePage implements Page {
 		panel.add(sendButton);
 	}
 
-	public boolean IsVisible() {
+	public boolean isVisible() {
 		return mainFrame.isVisible();
 	}
 
-	public Message GetMessage() {
+	public Message getMessage() {
 		String[] receivers = receiverText.getText().split(";");
 		String message = messageText.getText();
 		if (!timeshiftBox.isSelected()) {
 			return new Message(receivers, message);
 		} else {
-			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-			Date date;
+			String date = dateTextField.getText();
+			String time = timeComboBox.getSelectedItem().toString();
+			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyyHH:mm");
 			try {
-				date = format.parse(dateTextField.getText() + " " + timeComboBox.getSelectedItem());
+				return new Message(receivers, message, format.parse(dateTextField.getText() + timeComboBox.getSelectedItem()));
 			} catch (ParseException e) {
-				e.printStackTrace();
+				showError(String.format("Ungültiges Datum: %s %s", date, time));
 				return null;
 			}
-
-			return new Message(receivers, message, date);
 		}
 	}
 
-	public void Close() {
+	public void close() {
 		mainFrame.dispose();
+	}
+
+	public void showError(String errorMessage) {
+		JOptionPane.showMessageDialog(mainFrame, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
 	private Vector<String> getTimeList() {

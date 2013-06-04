@@ -4,63 +4,89 @@ import ch.zhaw.multiChannel.model.*;
 import ch.zhaw.multiChannel.view.*;
 
 public class Controller {
-	
+
 	private StartPage startPage;
 	private Page openedPage;
 	private PageType currentPageType;
 
 	// Test
-    public static void main(String[] args) {
-		new Controller().Start();
-    }
+	public static void main(String[] args) {
+		new Controller().start();
+	}
 
-	private void Start() {
+	private void start() {
 		startPage = new StartPage(this);
 		startPage.Show();
 	}
 
-	public void ComposeSms() {
+	public void composeSms() {
 		currentPageType = PageType.Sms;
 		openMessagePage("SMS");
 	}
 
-	public void ComposeFax() {
+	public void composeFax() {
 		currentPageType = PageType.Fax;
 		openMessagePage("Fax");
 	}
 
-	public void ComposeMms() {
+	public void composeMms() {
 		currentPageType = PageType.Mms;
-		openAttachmentMessagePage("MMS");
+		openAttachmentMessagePage(PageType.Mms, "MMS");
 	}
 
-	public void ComposeEmail() {
+	public void composeEmail() {
 		currentPageType = PageType.Email;
-		openAttachmentMessagePage("E-Mail");
+		openAttachmentMessagePage(PageType.Email, "E-Mail");
 	}
 
 	private void openMessagePage(String title) {
-		if (openedPage != null && openedPage.IsVisible()) {
+		if (openedPage != null && openedPage.isVisible()) {
 			startPage.ShowOnlyOnePageMessage();
 			return;
 		}
 		openedPage = new MessagePage(this);
-		openedPage.Show(title);
+		openedPage.show(title);
 	}
 
-	private void openAttachmentMessagePage(String title) {
-		if (openedPage != null && openedPage.IsVisible()) {
+	private void openAttachmentMessagePage(PageType pageType, String title) {
+		if (openedPage != null && openedPage.isVisible()) {
 			startPage.ShowOnlyOnePageMessage();
 			return;
 		}
+
+		String validAttachmentsText = pageType == PageType.Mms ? ".jpg, .gif" : "alles ausser .exe";
+
 		openedPage = new AttachmentMessagePage(this);
-		openedPage.Show(title);
+		((AttachmentMessagePage)openedPage).setValidAttachmentsText(validAttachmentsText);
+		openedPage.show(title);
 	}
 
-	public void SendMessageRequest() {
-		Message message = openedPage.GetMessage();
-		if (currentPageType == PageType.Sms || currentPageType == PageType.Fax) {
-			// Validation goes here.
+	public void sendMessageRequest() {
+		Message message = openedPage.getMessage();
+
+		Validator validator;
+		switch (currentPageType) {
+			case Sms:
+				validator = new SmsValidator(message);
+				break;
+			case Fax:
+				validator = new FaxValidator(message);
+				break;
+			case Mms:
+				validator = new MmsValidator((AttachmentMessage) message);
+				break;
+			case Email:
+				validator = new EmailValidator((AttachmentMessage) message);
+				break;
+			default:
+				System.out.println("Unknown page type " + currentPageType);
+				return;
+
+			new Sender().send(message);
+		}
+
+		if (!validator.isValid()) {
+			openedPage.showError(validator.getErrorMessage());
 		}
 	}
 

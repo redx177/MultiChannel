@@ -1,6 +1,6 @@
 package ch.zhaw.multiChannel.model;
 
 public interface Validator {
-
-	boolean validate();
+	boolean isValid();
+	String getErrorMessage();
 }

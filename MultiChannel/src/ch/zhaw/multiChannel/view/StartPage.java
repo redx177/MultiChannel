@@ -44,28 +44,28 @@ public class StartPage {
 		JButton sms = new JButton("SMS");
 		sms.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.ComposeSms();
+				controller.composeSms();
 			}
 		});
 
 		JButton mms = new JButton("MMS");
 		mms.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.ComposeMms();
+				controller.composeMms();
 			}
 		});
 
 		JButton email = new JButton("Email");
 		email.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.ComposeEmail();
+				controller.composeEmail();
 			}
 		});
 
 		JButton fax = new JButton("Fax");
 		fax.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.ComposeFax();
+				controller.composeFax();
 			}
 		});
 

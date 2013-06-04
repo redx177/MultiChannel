@@ -1,32 +1,26 @@
 package ch.zhaw.multiChannel.model;
 
-public class FaxValidator {
+public class FaxValidator implements Validator {
 
 	private Message message;
+	private String errorMessage;
 
 	public FaxValidator(Message message) {
-
 		this.message = message;
 	}
 
-	private boolean validate() {
-		int numberOfReceiver = message.getReceivers().length;
+	public boolean isValid() {
 		String[] receivers = message.getReceivers();
-
-		for (int i = 0; i <= numberOfReceiver; i++) {
-			if (receivers[i] == null || !isInteger(receivers[i])) {
+		for(String receiver : receivers) {
+			if (receiver == null || !ValidatorHelper.isInteger(receiver)) {
+				errorMessage = "Ungültiger Empfänger, nur Nummern erlaubt: " + receiver;
 				return false;
 			}
 		}
 		return true;
 	}
 
-	private boolean isInteger(String input) {
-		try {
-			Integer.parseInt(input);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 }

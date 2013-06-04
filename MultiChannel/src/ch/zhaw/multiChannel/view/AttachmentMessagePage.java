@@ -1,14 +1,16 @@
 package ch.zhaw.multiChannel.view;
 
 import ch.zhaw.multiChannel.controller.Controller;
-import com.sun.deploy.panel.JavaPanel;
-import sun.awt.OrientableFlowLayout;
+import ch.zhaw.multiChannel.model.AttachmentMessage;
+import ch.zhaw.multiChannel.model.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class AttachmentMessagePage extends MessagePage {
@@ -16,13 +18,32 @@ public class AttachmentMessagePage extends MessagePage {
 	private JPanel uploadPanel = new JPanel();
 	private JPanel uploadedPanel = new JPanel();
 	private ArrayList<File> selectedFiles = new ArrayList<File>();
+	private String validAttachmentsText;
 
 	public AttachmentMessagePage(Controller controller) {
 		super(controller);
 	}
 
-	public void Show(String title) {
-		super.Show(title);
+	public void show(String title) {
+		super.show(title);
+	}
+
+	public Message getMessage() {
+		String[] receivers = receiverText.getText().split(";");
+		String message = messageText.getText();
+		if (!timeshiftBox.isSelected()) {
+			return new AttachmentMessage(receivers, message, selectedFiles);
+		} else {
+			String date = dateTextField.getText();
+			String time = timeComboBox.getSelectedItem().toString();
+			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyyHH:mm");
+			try {
+				return new AttachmentMessage(receivers, message, format.parse(dateTextField.getText() + timeComboBox.getSelectedItem()), selectedFiles);
+			} catch (ParseException e) {
+				showError(String.format("Ungültiges Datum: %s %s", date, time));
+				return null;
+			}
+		}
 	}
 
 	protected void loadSendTimePanel(JPanel panel) {
@@ -42,7 +63,7 @@ public class AttachmentMessagePage extends MessagePage {
 		uploadFormPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JButton button = new JButton("Upload");
 		uploadFormPanel.add(button);
-		uploadFormPanel.add(new JLabel("(keine .exe - max 1mb)"));
+		uploadFormPanel.add(new JLabel(String.format("(Erlaubte Dateien: %s - max 1mb)", validAttachmentsText)));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
@@ -66,7 +87,7 @@ public class AttachmentMessagePage extends MessagePage {
 
 		// Creating new panel.
 		uploadedPanel = new JPanel();
-		uploadedPanel.setLayout(new GridLayout(selectedFiles.size(),1));
+		uploadedPanel.setLayout(new GridLayout(selectedFiles.size(), 1));
 		uploadPanel.add(uploadedPanel);
 
 		// Populating new panel.
@@ -80,11 +101,13 @@ public class AttachmentMessagePage extends MessagePage {
 
 			removeButton.addActionListener(new ActionListener() {
 				private File file;
+
 				public void actionPerformed(ActionEvent e) {
 					selectedFiles.remove(file);
 					repaintUploadedPanel();
 				}
-				private ActionListener init(File file){
+
+				private ActionListener init(File file) {
 					this.file = file;
 					return this;
 				}
@@ -93,5 +116,9 @@ public class AttachmentMessagePage extends MessagePage {
 
 		mainFrame.validate();
 		mainFrame.repaint();
+	}
+
+	public void setValidAttachmentsText(String validAttachmentsText) {
+		this.validAttachmentsText = validAttachmentsText;
 	}
 }
