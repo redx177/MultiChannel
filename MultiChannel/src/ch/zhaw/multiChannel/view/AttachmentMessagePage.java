@@ -27,11 +27,7 @@ public class AttachmentMessagePage extends MessagePage {
 
 	protected void loadSendTimePanel(JPanel panel) {
 		JPanel sendTimePanel = new JPanel();
-		sendTimePanel.setLayout(new BoxLayout(sendTimePanel, BoxLayout.X_AXIS));
-		sendTimePanel.add(timeshiftBox);
-		sendTimePanel.add(dateTextField);
-		sendTimePanel.add(timeComboBox);
-		sendTimePanel.add(sendButton);
+		super.loadSendTimePanel(sendTimePanel);
 
 		uploadPanel = new JPanel();
 		loadUploadPanel();

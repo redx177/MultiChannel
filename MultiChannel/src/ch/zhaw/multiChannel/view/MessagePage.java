@@ -32,7 +32,7 @@ public class MessagePage implements Page {
 	JPanel lowerPanel = new JPanel();
 	JPanel additionalPanel = new JPanel();
 
-	JFrame mainFrame = new JFrame();
+	MinimumSizedFrame mainFrame = new MinimumSizedFrame();
 
 	public MessagePage(Controller controller) {
 		this.controller = controller;
@@ -43,12 +43,14 @@ public class MessagePage implements Page {
 		timeComboBox.setEditable(false);
 		dateTextField.setText("sofort senden");
 		dateTextField.setEditable(false);
-		upperPanel.setLayout(new FlowLayout());
+		upperPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		upperPanel.add(receiverLabel);
 		upperPanel.add(receiverText);
 
-		middlePanel.setLayout(new FlowLayout());
-		middlePanel.add(messageText);
+		middlePanel.setLayout(new BorderLayout());
+		middlePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		JScrollPane scrollMessageText = new JScrollPane(messageText);
+		middlePanel.add(scrollMessageText, BorderLayout.CENTER);
 
 		JPanel sendTimePanel = new JPanel();
 		sendTimePanel.setLayout(new FlowLayout());
@@ -56,12 +58,14 @@ public class MessagePage implements Page {
 
 		mainPanel.setSize(600, 700);
 		mainPanel.setLayout(new BorderLayout());
+		mainPanel.setBorder(BorderFactory.createDashedBorder(Color.RED));
 		mainPanel.add(BorderLayout.NORTH, upperPanel);
-		mainPanel.add(BorderLayout.WEST, middlePanel);
+		mainPanel.add(BorderLayout.CENTER, middlePanel);
 		mainPanel.add(BorderLayout.SOUTH, lowerPanel);
 
 		mainFrame.getContentPane().add(mainPanel);
 		mainFrame.setSize(600, 500);
+		mainFrame.setMinimumSize(new Dimension(470, 200));
 		mainFrame.setVisible(true);
 		mainFrame.setTitle(title);
 		mainFrame.pack();
@@ -87,9 +91,10 @@ public class MessagePage implements Page {
 	}
 
 	protected void loadSendTimePanel(JPanel panel) {
-		panel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel.add(timeshiftBox);
 		panel.add(dateTextField);
+		dateTextField.setColumns(7);
 		panel.add(timeComboBox);
 		panel.add(sendButton);
 	}
