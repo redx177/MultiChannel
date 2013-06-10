@@ -53,7 +53,7 @@ public class MmsValidatorTest {
 		sut.isValid();
 		assertEquals(
 				"Validating error message if message is to long.",
-				"Ungültiges File: foo.exe",
+				"Ungültiges File (erlaubt: .jpg, .gif): foo.exe",
 				sut.getErrorMessage());
 	}
 

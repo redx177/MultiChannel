@@ -36,13 +36,13 @@ public class EmailValidator implements Validator {
 			if (i > 0) {
 				String extension = fileName.substring(i + 1);
 				if (extension.equals("exe")) {
-					errorMessage = "Ungültiges File: " + fileName;
+					errorMessage = "Ungültiges File (erlaubt ist alles ausser .exe): " + fileName;
 					return false;
 				}
 			}
 
 			if(currentFile.length() > 1048576){
-				errorMessage = "File ist grösser als 1MB: " + currentFile.getName();
+				errorMessage = "File ist grösser als 1MB: " + fileName;
 				return false;
 			}
 		}

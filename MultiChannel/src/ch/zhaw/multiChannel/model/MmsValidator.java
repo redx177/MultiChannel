@@ -26,13 +26,13 @@ public class MmsValidator implements Validator {
 			if (i > 0) {
 				String extension = fileName.substring(i + 1);
 				if (!extension.equals("jpg") && !extension.equals("gif")) {
-					errorMessage = "Ungültiges File: " + fileName;
+					errorMessage = "Ungültiges File (erlaubt: .jpg, .gif): " + fileName;
 					return false;
 				}
 			}
 
-			if (currentFile.length() > 5242880) {
-				errorMessage = "File ist grösser als 5MB!";
+			if (currentFile.length() > 1048576) {
+				errorMessage = "File ist grösser als 1MB: " + fileName;
 				return false;
 			}
 		}
