@@ -12,21 +12,24 @@ public class EmailValidator implements Validator {
 	}
 	
 	public boolean isValid(){
-		return validateAttachement();
+		return validateReceivers() && validateAttachement();
 	}
 
 	public String getErrorMessage() {
 		return errorMessage;
 	}
 
-	private boolean validateAttachement(){
+	private boolean validateReceivers() {
 		for (String email : attachmentMessage.getReceivers()) {
 			if (!isValidEmail(email)) {
 				errorMessage = "Ungültige EMail: " + email;
 				return false;
 			}
 		}
+		return true;
+	}
 
+	private boolean validateAttachement(){
 		for(File currentFile : attachmentMessage.getAttachments()){
 			String fileName = currentFile.getName();
 			int i = fileName.lastIndexOf('.');
@@ -47,7 +50,7 @@ public class EmailValidator implements Validator {
 		return true;
 	}
 
-	public static boolean isValidEmail(String email) {
+	private static boolean isValidEmail(String email) {
 		return email.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 	}
 }
