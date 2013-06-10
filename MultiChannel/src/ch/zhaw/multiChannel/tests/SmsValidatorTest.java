@@ -57,8 +57,7 @@ public class SmsValidatorTest {
 	private Message getValidMessage() {
 		return new Message(
 				new String[] {"0791234567","0784567890"},
-				"My Message",
-				new Date()
+				"My Message"
 		);
 	}
 

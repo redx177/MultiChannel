@@ -1,7 +1,6 @@
 package ch.zhaw.multiChannel.tests;
 
 import ch.zhaw.multiChannel.model.AttachmentMessage;
-import ch.zhaw.multiChannel.model.Message;
 import ch.zhaw.multiChannel.model.MmsValidator;
 import org.junit.Test;
 
@@ -62,7 +61,6 @@ public class MmsValidatorTest {
 		return new AttachmentMessage(
 				new String[] {"0791234567","0784567890"},
 				"My Message",
-				new Date(),
 				getValidFiles()
 		);
 	}
