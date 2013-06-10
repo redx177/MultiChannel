@@ -9,7 +9,6 @@ public class Controller {
 	private Page openedPage;
 	private PageType currentPageType;
 
-	// Test
 	public static void main(String[] args) {
 		new Controller().start();
 	}
@@ -71,6 +70,7 @@ public class Controller {
 			openedPage.showError(e.getMessage());
 		}
 
+		assert validator != null;
 		if (!validator.isValid()) {
 			openedPage.showError(validator.getErrorMessage());
 			return;
