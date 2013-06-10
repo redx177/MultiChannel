@@ -1,7 +1,6 @@
 package ch.zhaw.multiChannel.model;
 
 import java.util.Date;
-import java.util.List;
 
 public class Message {
 	private String[] receivers;
