@@ -12,7 +12,7 @@ public class MmsValidator implements Validator {
 	}
 
 	public boolean isValid() {
-		return validateAttachement();
+		return validateReceiver() && validateAttachement();
 	}
 
 	public String getErrorMessage() {
@@ -20,14 +20,6 @@ public class MmsValidator implements Validator {
 	}
 
 	private boolean validateAttachement() {
-		String[] receivers = attachmentMessage.getReceivers();
-		for(String receiver : receivers) {
-			if (receiver == null || !ValidatorHelper.isInteger(receiver)) {
-				errorMessage = "Ungültiger Empfänger, nur Nummern erlaubt: " + receiver;
-				return false;
-			}
-		}
-
 		for (File currentFile : attachmentMessage.getAttachments()) {
 			String fileName = currentFile.getName();
 			int i = fileName.lastIndexOf('.');
@@ -45,6 +37,17 @@ public class MmsValidator implements Validator {
 			}
 		}
 
+		return true;
+	}
+
+	private boolean validateReceiver() {
+		String[] receivers = attachmentMessage.getReceivers();
+		for(String receiver : receivers) {
+			if (receiver == null || !ValidatorHelper.isInteger(receiver)) {
+				errorMessage = "Ungültiger Empfänger, nur Nummern erlaubt: " + receiver;
+				return false;
+			}
+		}
 		return true;
 	}
 }

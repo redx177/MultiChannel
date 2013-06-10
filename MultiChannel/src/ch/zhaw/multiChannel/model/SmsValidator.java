@@ -10,7 +10,7 @@ public class SmsValidator implements Validator {
 	}
 
 	public boolean isValid() {
-		return validateReceivers();
+		return validateReceivers() && validateMessage();
 	}
 
 	public String getErrorMessage() {
@@ -26,12 +26,15 @@ public class SmsValidator implements Validator {
 			}
 		}
 
+		return true;
+	}
+
+	private boolean validateMessage() {
 		int messageLength = message.getMessage().length();
 		if (messageLength > 160) {
 			errorMessage = "Die Nachricht hat "+ messageLength +"/160 Zeichen.";
 			return false;
 		}
-
 		return true;
 	}
 }
