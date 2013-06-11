@@ -2,12 +2,10 @@ package ch.zhaw.multiChannel.controller;
 
 import ch.zhaw.multiChannel.model.AttachmentMessage;
 import ch.zhaw.multiChannel.model.Message;
-import com.sun.deploy.util.StringUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Sender {
 
