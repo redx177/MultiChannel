@@ -36,22 +36,17 @@ public class MmsValidator implements Validator {
 
 	private boolean validateAttachement() {
 		
-		for (File currentFile : attachmentMessage.getAttachments()) {
-			
+		for (File currentFile : attachmentMessage.getAttachments()) {			
 			String fileName = currentFile.getName();
 			int i = fileName.lastIndexOf('.');
-			
-			if (i > 0) {
-				
+
+			if (i > 0) {				
 				String extension = fileName.substring(i + 1);
-				
 				if (!extension.equals("jpg") && !extension.equals("gif")) {
-					
 					errorMessage = "Ungültiges File (erlaubt: .jpg, .gif): " + fileName;
 					return false;
 				}
 			}
-
 			if (currentFile.length() > 1048576) {
 				errorMessage = "File ist grösser als 1MB: " + fileName;
 				return false;
@@ -66,9 +61,7 @@ public class MmsValidator implements Validator {
 		String[] receivers = attachmentMessage.getReceivers();
 		
 		for(String receiver : receivers) {
-			
 			if (receiver == null || !ValidatorHelper.isInteger(receiver)) {
-				
 				errorMessage = "Ungültiger Empfänger, nur Nummern erlaubt: " + receiver;
 				return false;
 			}

@@ -32,8 +32,8 @@ public class StartPage {
 		this.controller = controller;
 	}
 
-	/*Our Frame will be created here*/
-	public void Show() {
+	/**Our Frame will be created here*/
+	public void show() {
 
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +48,7 @@ public class StartPage {
 		frame.setVisible(true);
 	}
 	
-	/*Here our Buttons will be created and add in our Frame*/
+	/**Here our Buttons will be created and add in our Frame*/
 	private JPanel getInputPanel() {
 
 		JPanel panel = new JPanel();

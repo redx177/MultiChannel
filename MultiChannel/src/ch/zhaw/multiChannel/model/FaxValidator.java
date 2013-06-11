@@ -26,10 +26,8 @@ public class FaxValidator implements Validator {
 		
 		String[] receivers = message.getReceivers();
 		
-		for(String receiver : receivers) {
-			
+		for(String receiver : receivers) {			
 			if (receiver == null || !ValidatorHelper.isInteger(receiver)) {
-				
 				errorMessage = "Ungültiger Empfänger, nur Nummern erlaubt: " + receiver;
 				return false;
 			}

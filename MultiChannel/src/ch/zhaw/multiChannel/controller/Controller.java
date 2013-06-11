@@ -29,7 +29,7 @@ public class Controller {
 	private void start() {
 		
 		startPage = new StartPage(this);
-		startPage.Show();
+		startPage.show();
 	}
 
 	public void composeSms() {
@@ -58,8 +58,7 @@ public class Controller {
 
 	private void openMessagePage(String title) {
 		
-		if (openedPage != null && openedPage.isVisible()) {
-			
+		if (openedPage != null && openedPage.isVisible()) {		
 			startPage.ShowOnlyOnePageMessage();
 			return;
 		}
@@ -71,7 +70,6 @@ public class Controller {
 	private void openAttachmentMessagePage(PageType pageType, String title) {
 		
 		if (openedPage != null && openedPage.isVisible()) {
-		
 			startPage.ShowOnlyOnePageMessage();
 			return;
 		}
@@ -97,13 +95,11 @@ public class Controller {
 		assert validator != null;
 		
 		if (!validator.isValid()) {
-			
 			openedPage.showError(validator.getErrorMessage());
 			return;
 		}
 
 		if (currentPageType == PageType.Mms || currentPageType == PageType.Email) {
-			
 			new Sender().send(currentPageType, (AttachmentMessage)message);
 		
 		} else {
