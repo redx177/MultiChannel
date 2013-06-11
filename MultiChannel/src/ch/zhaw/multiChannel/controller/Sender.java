@@ -13,11 +13,17 @@ public class Sender {
 
 	public void send(Controller.PageType type, Message message) {
 
-		int length = message.getReceivers().length;
+		String[] receivers = message.getReceivers();
+		int length = receivers.length;
 		String s = length == 1 ? "" : "s";
 
+		String joinedReceivers = receivers[0];
+		for (int i = 1; i < length; i++) {
+			joinedReceivers += "\n - " + receivers[i];
+		}
+
 		System.out.printf("Sending %s:%n---------------%n", getTypeAsString(type));
-		System.out.printf(String.format("To %d receiver%s:%n - %s%n%n", length, s, StringUtils.join(Arrays.asList(message.getReceivers()), "\n - ")));
+		System.out.printf(String.format("To %d receiver%s:%n - %s%n%n", length, s, joinedReceivers));
 		System.out.printf("Sending on: %s%n%n", new SimpleDateFormat("dd.MM.yyyy HH:mm").format(message.getSendDate()));
 		System.out.printf("Message:%n%s%n%n", message.getMessage().length() > 0 ? message.getMessage() : "<<No Message>>");
 	}
