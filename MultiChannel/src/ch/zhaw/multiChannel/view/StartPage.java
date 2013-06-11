@@ -28,11 +28,13 @@ public class StartPage {
 	private JFrame frame;
 
 	public StartPage(Controller controller) {
-		
+
 		this.controller = controller;
 	}
 
-	/**Our Frame will be created here*/
+	/**
+	 * Our Frame will be created here
+	 */
 	public void show() {
 
 		frame = new JFrame();
@@ -47,8 +49,10 @@ public class StartPage {
 		frame.setSize(300, 300);
 		frame.setVisible(true);
 	}
-	
-	/**Here our Buttons will be created and add in our Frame*/
+
+	/**
+	 * Here our Buttons will be created and add in our Frame
+	 */
 	private JPanel getInputPanel() {
 
 		JPanel panel = new JPanel();
@@ -56,7 +60,7 @@ public class StartPage {
 		JButton sms = new JButton("SMS");
 		sms.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				controller.composeSms();
 			}
 		});
@@ -64,7 +68,7 @@ public class StartPage {
 		JButton mms = new JButton("MMS");
 		mms.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				controller.composeMms();
 			}
 		});
@@ -72,7 +76,7 @@ public class StartPage {
 		JButton email = new JButton("Email");
 		email.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				controller.composeEmail();
 			}
 		});
@@ -80,7 +84,7 @@ public class StartPage {
 		JButton fax = new JButton("Fax");
 		fax.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				controller.composeFax();
 			}
 		});
