@@ -21,7 +21,7 @@ public class MinimumSizedFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public MinimumSizedFrame() {
-		
+
 		setTitle("Custom Component Test");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -41,7 +41,7 @@ public class MinimumSizedFrame extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		
+
 		MinimumSizedFrame main = new MinimumSizedFrame();
 		main.display();
 	}

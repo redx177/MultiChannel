@@ -121,9 +121,9 @@ public class AttachmentMessagePage extends MessagePage {
 			uploadedPanel.add(filePanel);
 
 			removeButton.addActionListener(new ActionListener() {
-				
+
 				private File file;
-				
+
 				public void actionPerformed(ActionEvent e) {
 
 					selectedFiles.remove(file);

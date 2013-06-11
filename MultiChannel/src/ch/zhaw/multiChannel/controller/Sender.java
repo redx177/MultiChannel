@@ -61,7 +61,6 @@ public class Sender {
 
 	private String getTypeAsString(Controller.PageType type) {
 
-		String typeDescription;
 		switch (type) {
 			case Sms:
 				return "SMS";

@@ -51,7 +51,9 @@ public class MessagePage implements Page {
 		this.controller = controller;
 	}
 
-	/**It creates the User Interface*/
+	/**
+	 * It creates the User Interface
+	 */
 	public void show(String title) {
 
 		timeComboBox = new JComboBox(getTimeList());
@@ -135,7 +137,7 @@ public class MessagePage implements Page {
 			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyyHH:mm");
 			try {
 				return new Message(receivers, message, format.parse(dateTextField.getText() + timeComboBox.getSelectedItem()));
-			}catch (ParseException e) {
+			} catch (ParseException e) {
 				showError(String.format("Ung�ltiges Datum: %s %s", date, time));
 				return null;
 			}
@@ -163,8 +165,8 @@ public class MessagePage implements Page {
 
 		for (int h = 0; h < 24; h++) {
 			for (int min = 0; min < 60; min = min + 5) {
-					String stunde = Integer.toString(h);
-					if (stunde.length() == 1) {
+				String stunde = Integer.toString(h);
+				if (stunde.length() == 1) {
 					stunde = "0" + stunde;
 				}
 				String minuten = Integer.toString(min);

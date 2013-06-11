@@ -13,7 +13,6 @@
 
 package ch.zhaw.multiChannel.view;
 
-import ch.zhaw.multiChannel.controller.Controller;
 import ch.zhaw.multiChannel.model.Message;
 
 public interface Page {

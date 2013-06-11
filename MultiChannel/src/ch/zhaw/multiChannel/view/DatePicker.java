@@ -89,30 +89,30 @@ class DatePicker {
 
 		for (int x = 7; x < button.length; x++)
 			button[x].setText("");
-			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
 				"MMMM yyyy");
-			java.util.Calendar cal = java.util.Calendar.getInstance();
-			cal.set(year, month, 1);
+		java.util.Calendar cal = java.util.Calendar.getInstance();
+		cal.set(year, month, 1);
 
-			int dayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK);
-			int daysInMonth = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
+		int dayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK);
+		int daysInMonth = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
 
-			for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x++, day++)
+		for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x++, day++)
 
-				button[x].setText("" + day);
-				l.setText(sdf.format(cal.getTime()));
-				d.setTitle("Date Picker");
+			button[x].setText("" + day);
+		l.setText(sdf.format(cal.getTime()));
+		d.setTitle("Date Picker");
 	}
 
 	public String setPickedDate() {
 
 		if (day.equals(""))
 			return day;
-			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
 				"dd.MM.yyyy");
-			java.util.Calendar cal = java.util.Calendar.getInstance();
-			cal.set(year, month, Integer.parseInt(day));
-			return sdf.format(cal.getTime());
+		java.util.Calendar cal = java.util.Calendar.getInstance();
+		cal.set(year, month, Integer.parseInt(day));
+		return sdf.format(cal.getTime());
 	}
 }
 

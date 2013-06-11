@@ -38,7 +38,7 @@ public class SmsValidator implements Validator {
 
 		for (String receiver : receivers) {
 			if (receiver == null || !ValidatorHelper.isInteger(receiver)) {
-				errorMessage = "Ung�ltiger Empf�nger, nur Nummern erlaubt: " + receiver;
+				errorMessage = "Ungültiger Empfänger, nur Nummern erlaubt: " + receiver;
 				return false;
 			}
 		}
