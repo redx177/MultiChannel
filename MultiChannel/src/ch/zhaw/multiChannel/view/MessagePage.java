@@ -1,3 +1,16 @@
+/*
+ * Class MessagePage
+ * 
+ * Version: 1.0
+ *
+ * 11.06.2013
+ * 
+ * This Class will implement our Interface Page and other Methods which will
+ * be used to create our Message Page to interact with the users.
+ *
+ * Copyright ZHAW 2013
+ */
+
 package ch.zhaw.multiChannel.view;
 
 import ch.zhaw.multiChannel.controller.Controller;
@@ -13,32 +26,35 @@ import java.util.Vector;
 
 
 public class MessagePage implements Page {
+	
 	private Controller controller;
-	String uhrzeit_String = new String();
+	String timeOfDay = new String();
 
-	JLabel receiverLabel = new JLabel("EmpfÃ¤nger:");
-	JLabel receiverInfoLabel = new JLabel("(separiert durch semikolon)");
-	JTextField receiverText = new JTextField(15);
-	JTextArea messageText = new JTextArea(15, 40);
 	JButton sendButton = new JButton("Nachricht senden");
 	JCheckBox timeshiftBox = new JCheckBox("Zeit versetzt senden?");
-	JTextField dateTextField = new JTextField(20);
 	JComboBox timeComboBox;
-
-
-	JPanel mainPanel = new JPanel();
-	JPanel upperPanel = new JPanel();
-	JPanel middlePanel = new JPanel();
-	JPanel lowerPanel = new JPanel();
+	JLabel receiverLabel = new JLabel("Empfänger:");
+	JLabel receiverInfoLabel = new JLabel("(separiert durch semikolon)");
+	JTextArea messageText = new JTextArea(15, 40);
+	JTextField receiverText = new JTextField(15);
+	JTextField dateTextField = new JTextField(20);
+	
 	JPanel additionalPanel = new JPanel();
-
+	JPanel lowerPanel = new JPanel();
+	JPanel mainPanel = new JPanel();
+	JPanel middlePanel = new JPanel();
+	JPanel upperPanel = new JPanel();
+	
 	MinimumSizedFrame mainFrame = new MinimumSizedFrame();
 
 	public MessagePage(Controller controller) {
+		
 		this.controller = controller;
 	}
-
+	
+	/*It creates the User Interface*/
 	public void show(String title) {
+		
 		timeComboBox = new JComboBox(getTimeList());
 		timeComboBox.setEditable(false);
 		dateTextField.setText("sofort senden");
@@ -73,10 +89,14 @@ public class MessagePage implements Page {
 
 		timeshiftBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent datum) {
+		
 				if (timeshiftBox.isSelected()) {
+				
 					dateTextField.setText(new DatePicker(mainFrame).setPickedDate());
 					timeComboBox.setEditable(true);
+				
 				} else {
+				
 					dateTextField.setText("Zeitversetzt senden?");
 					timeComboBox.setEditable(false);
 				}
@@ -85,12 +105,15 @@ public class MessagePage implements Page {
 
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
 				controller.sendMessageRequest();
 			}
 		});
 	}
 
+	
 	protected void loadSendTimePanel(JPanel panel) {
+		
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel.add(timeshiftBox);
 		panel.add(dateTextField);
@@ -100,56 +123,68 @@ public class MessagePage implements Page {
 	}
 
 	public boolean isVisible() {
+		
 		return mainFrame.isVisible();
 	}
 
 	public Message getMessage() {
+		
 		String[] receivers = receiverText.getText().split(";");
 		String message = messageText.getText();
 		if (!timeshiftBox.isSelected()) {
+		
 			return new Message(receivers, message);
+	
 		} else {
+		
 			String date = dateTextField.getText();
 			String time = timeComboBox.getSelectedItem().toString();
 			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyyHH:mm");
 			try {
 				return new Message(receivers, message, format.parse(dateTextField.getText() + timeComboBox.getSelectedItem()));
 			} catch (ParseException e) {
-				showError(String.format("UngÃ¼ltiges Datum: %s %s", date, time));
+				showError(String.format("Ungültiges Datum: %s %s", date, time));
 				return null;
 			}
 		}
 	}
 
 	public void close() {
+		
 		mainFrame.dispose();
 	}
 
 	public void showError(String errorMessage) {
+		
 		JOptionPane.showMessageDialog(mainFrame, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
 	public void showNotification(String errorMessage) {
+		
 		JOptionPane.showMessageDialog(mainFrame, errorMessage, "Danke", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private Vector<String> getTimeList() {
-		Vector<String> uhrzeit_liste = new Vector<String>();
+		
+		Vector<String> timelist = new Vector<String>();
 
 		for (int h = 0; h < 24; h++) {
 			for (int min = 0; min < 60; min = min + 5) {
+		
 				String stunde = Integer.toString(h);
 				if (stunde.length() == 1) {
+					
 					stunde = "0" + stunde;
 				}
 				String minuten = Integer.toString(min);
 				if (minuten.length() == 1) {
+					
 					minuten = "0" + minuten;
 				}
-				uhrzeit_String = stunde + ":" + minuten;
-				uhrzeit_liste.add(uhrzeit_String);
+				timeOfDay = stunde + ":" + minuten;
+				timelist.add(timeOfDay);
 			}
 		}
-		return uhrzeit_liste;
+		return timelist;
 	}
 }
