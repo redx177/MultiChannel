@@ -1,5 +1,5 @@
 /*
- * Interface AttachmentMessagePage
+ * Interface Validator
  * 
  * Version: 1.0
  *

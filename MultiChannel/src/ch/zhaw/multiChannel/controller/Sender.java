@@ -1,3 +1,15 @@
+/*
+ * Class Sender
+ * 
+ * Version: 1.0
+ *
+ * 11.06.2013
+ * 
+ * This Class will offer the Methods to send a message.
+ *
+ * Copyright ZHAW 2013
+ */
+
 package ch.zhaw.multiChannel.controller;
 
 import ch.zhaw.multiChannel.model.AttachmentMessage;
@@ -10,12 +22,12 @@ import java.util.ArrayList;
 public class Sender {
 
 	public void send(Controller.PageType type, Message message) {
-
+		
 		String[] receivers = message.getReceivers();
 		int length = receivers.length;
 		String s = length == 1 ? "" : "s";
-
 		String joinedReceivers = receivers[0];
+		
 		for (int i = 1; i < length; i++) {
 			joinedReceivers += "\n - " + receivers[i];
 		}
@@ -27,6 +39,7 @@ public class Sender {
 	}
 
 	public void send(Controller.PageType type, AttachmentMessage attachmentMessage) {
+		
 		send(type, (Message)attachmentMessage);
 
 		if (attachmentMessage.getAttachments().size() > 0) {
@@ -36,7 +49,9 @@ public class Sender {
 	}
 
 	private String getAttachmentsAsString(ArrayList<File> attachments) {
+		
 		String result = "";
+		
 		for (File file : attachments) {
 			result+= " - " + file.getName() + "\n";
 		}
@@ -45,6 +60,7 @@ public class Sender {
 	}
 
 	private String getTypeAsString(Controller.PageType type) {
+		
 		String typeDescription;
 		switch (type) {
 			case Sms:

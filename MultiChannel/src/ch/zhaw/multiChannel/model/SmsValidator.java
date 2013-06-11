@@ -37,10 +37,8 @@ public class SmsValidator implements Validator {
 		String[] receivers = message.getReceivers();
 		
 		for(String receiver : receivers) {
-		
 			if (receiver == null || !ValidatorHelper.isInteger(receiver)) {
-			
-				errorMessage = "UngÃ¼ltiger EmpfÃ¤nger, nur Nummern erlaubt: " + receiver;
+				errorMessage = "Ungültiger Empfänger, nur Nummern erlaubt: " + receiver;
 				return false;
 			}
 		}
@@ -53,7 +51,6 @@ public class SmsValidator implements Validator {
 		int messageLength = message.getMessage().length();
 		
 		if (messageLength > 160) {
-		
 			errorMessage = "Die Nachricht hat "+ messageLength +"/160 Zeichen.";
 			return false;
 		}
