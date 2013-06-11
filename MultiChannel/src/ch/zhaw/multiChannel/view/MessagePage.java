@@ -28,31 +28,30 @@ import java.util.Vector;
 public class MessagePage implements Page {
 
 	private Controller controller;
-	String timeOfDay = new String();
+	private String timeOfDay = new String();
 
-	JButton sendButton = new JButton("Nachricht senden");
-	JCheckBox timeshiftBox = new JCheckBox("Zeit versetzt senden?");
-	JComboBox timeComboBox;
-	JLabel receiverLabel = new JLabel("Empf�nger:");
-	JLabel receiverInfoLabel = new JLabel("(separiert durch semikolon)");
-	JTextArea messageText = new JTextArea(15, 40);
-	JTextField receiverText = new JTextField(15);
-	JTextField dateTextField = new JTextField(20);
+	private JButton sendButton = new JButton("Nachricht senden");
+	protected JCheckBox timeshiftBox = new JCheckBox("Zeit versetzt senden?");
+	protected JComboBox timeComboBox;
+	private JLabel receiverLabel = new JLabel("Empf�nger:");
+	private JLabel receiverInfoLabel = new JLabel("(separiert durch semikolon)");
+	protected JTextArea messageText = new JTextArea(15, 40);
+	protected JTextField receiverText = new JTextField(15);
+	protected JTextField dateTextField = new JTextField(20);
 
-	JPanel additionalPanel = new JPanel();
-	JPanel lowerPanel = new JPanel();
-	JPanel mainPanel = new JPanel();
-	JPanel middlePanel = new JPanel();
-	JPanel upperPanel = new JPanel();
+	private JPanel lowerPanel = new JPanel();
+	private JPanel mainPanel = new JPanel();
+	private JPanel middlePanel = new JPanel();
+	private JPanel upperPanel = new JPanel();
 
-	MinimumSizedFrame mainFrame = new MinimumSizedFrame();
+	protected MinimumSizedFrame mainFrame = new MinimumSizedFrame();
 
 	public MessagePage(Controller controller) {
 
 		this.controller = controller;
 	}
 
-	/*It creates the User Interface*/
+	/**It creates the User Interface*/
 	public void show(String title) {
 
 		timeComboBox = new JComboBox(getTimeList());
@@ -91,12 +90,9 @@ public class MessagePage implements Page {
 			public void actionPerformed(ActionEvent datum) {
 
 				if (timeshiftBox.isSelected()) {
-
 					dateTextField.setText(new DatePicker(mainFrame).setPickedDate());
 					timeComboBox.setEditable(true);
-
 				} else {
-
 					dateTextField.setText("Zeitversetzt senden?");
 					timeComboBox.setEditable(false);
 				}
@@ -132,17 +128,14 @@ public class MessagePage implements Page {
 		String[] receivers = receiverText.getText().split(";");
 		String message = messageText.getText();
 		if (!timeshiftBox.isSelected()) {
-
 			return new Message(receivers, message);
-
 		} else {
-
 			String date = dateTextField.getText();
 			String time = timeComboBox.getSelectedItem().toString();
 			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyyHH:mm");
 			try {
 				return new Message(receivers, message, format.parse(dateTextField.getText() + timeComboBox.getSelectedItem()));
-			} catch (ParseException e) {
+			}catch (ParseException e) {
 				showError(String.format("Ung�ltiges Datum: %s %s", date, time));
 				return null;
 			}
@@ -170,15 +163,12 @@ public class MessagePage implements Page {
 
 		for (int h = 0; h < 24; h++) {
 			for (int min = 0; min < 60; min = min + 5) {
-
-				String stunde = Integer.toString(h);
-				if (stunde.length() == 1) {
-
+					String stunde = Integer.toString(h);
+					if (stunde.length() == 1) {
 					stunde = "0" + stunde;
 				}
 				String minuten = Integer.toString(min);
 				if (minuten.length() == 1) {
-
 					minuten = "0" + minuten;
 				}
 				timeOfDay = stunde + ":" + minuten;

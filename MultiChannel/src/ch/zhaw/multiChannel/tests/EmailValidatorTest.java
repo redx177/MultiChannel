@@ -23,7 +23,7 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class EmailValidatorTest {
+public class EmailValidatorTest{
 
 	@Test
 	public void testValidationOfValidMessage() throws Exception {

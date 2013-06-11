@@ -17,7 +17,7 @@ import java.io.File;
 public class EmailValidator implements Validator {
 
 	private AttachmentMessage attachmentMessage;
-	public String errorMessage;
+	private String errorMessage;
 
 	public EmailValidator(AttachmentMessage attachmentMessage) {
 
@@ -37,7 +37,6 @@ public class EmailValidator implements Validator {
 	private boolean validateReceivers() {
 
 		for (String email : attachmentMessage.getReceivers()) {
-
 			if (!isValidEmail(email)) {
 				errorMessage = "Ungültige EMail: " + email;
 				return false;
@@ -58,7 +57,6 @@ public class EmailValidator implements Validator {
 					return false;
 				}
 			}
-
 			if (currentFile.length() > 1048576) {
 				errorMessage = "File ist grösser als 1MB: " + fileName;
 				return false;
@@ -69,6 +67,7 @@ public class EmailValidator implements Validator {
 	}
 
 	private static boolean isValidEmail(String email) {
+		
 		return email.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 	}
 }

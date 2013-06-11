@@ -39,7 +39,6 @@ public class MmsValidator implements Validator {
 		for (File currentFile : attachmentMessage.getAttachments()) {
 			String fileName = currentFile.getName();
 			int i = fileName.lastIndexOf('.');
-
 			if (i > 0) {
 				String extension = fileName.substring(i + 1);
 				if (!extension.equals("jpg") && !extension.equals("gif")) {

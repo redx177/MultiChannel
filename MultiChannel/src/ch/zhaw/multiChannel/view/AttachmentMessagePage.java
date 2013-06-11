@@ -48,11 +48,8 @@ public class AttachmentMessagePage extends MessagePage {
 		String message = messageText.getText();
 
 		if (!timeshiftBox.isSelected()) {
-
 			return new AttachmentMessage(receivers, message, selectedFiles);
-
 		} else {
-
 			String date = dateTextField.getText();
 			String time = timeComboBox.getSelectedItem().toString();
 			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyyHH:mm");
@@ -93,7 +90,6 @@ public class AttachmentMessagePage extends MessagePage {
 				int returnVal = fc.showOpenDialog(uploadPanel);
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-
 					selectedFiles.add(fc.getSelectedFile());
 					repaintUploadedPanel();
 				}
@@ -107,17 +103,16 @@ public class AttachmentMessagePage extends MessagePage {
 
 	private void repaintUploadedPanel() {
 
-		/* Removing old panel.*/
+		/** Removing old panel.*/
 		uploadPanel.remove(uploadedPanel);
 
-		/* Creating new panel.*/
+		/** Creating new panel.*/
 		uploadedPanel = new JPanel();
 		uploadedPanel.setLayout(new GridLayout(selectedFiles.size(), 1));
 		uploadPanel.add(uploadedPanel);
 
-		/* Populating new panel.*/
+		/** Populating new panel.*/
 		for (File file : selectedFiles) {
-
 			JPanel filePanel = new JPanel();
 			filePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			JButton removeButton = new JButton("x");
@@ -126,8 +121,9 @@ public class AttachmentMessagePage extends MessagePage {
 			uploadedPanel.add(filePanel);
 
 			removeButton.addActionListener(new ActionListener() {
+				
 				private File file;
-
+				
 				public void actionPerformed(ActionEvent e) {
 
 					selectedFiles.remove(file);

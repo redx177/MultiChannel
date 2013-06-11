@@ -59,7 +59,7 @@ public class Controller {
 	private void openMessagePage(String title) {
 
 		if (openedPage != null && openedPage.isVisible()) {
-			startPage.ShowOnlyOnePageMessage();
+			startPage.showOnlyOnePageMessage();
 			return;
 		}
 
@@ -70,7 +70,7 @@ public class Controller {
 	private void openAttachmentMessagePage(PageType pageType, String title) {
 
 		if (openedPage != null && openedPage.isVisible()) {
-			startPage.ShowOnlyOnePageMessage();
+			startPage.showOnlyOnePageMessage();
 			return;
 		}
 
