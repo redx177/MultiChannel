@@ -93,7 +93,8 @@ public class StartPage {
 		return panel;
 	}
 
-	public void ShowOnlyOnePageMessage() {
+	public void showOnlyOnePageMessage() {
+		
 		JOptionPane.showMessageDialog(frame, "Es kann nur eine Seite offen sein. " +
 				"Bitte schliessen Sie die andere bevor sie eine weitere öffnen.");
 	}
