@@ -18,27 +18,27 @@ public class EmailValidator implements Validator {
 
 	private AttachmentMessage attachmentMessage;
 	public String errorMessage;
-	
-	public EmailValidator(AttachmentMessage attachmentMessage){
-		
+
+	public EmailValidator(AttachmentMessage attachmentMessage) {
+
 		this.attachmentMessage = attachmentMessage;
 	}
-	
-	public boolean isValid(){
-		
+
+	public boolean isValid() {
+
 		return validateReceivers() && validateAttachement();
 	}
 
 	public String getErrorMessage() {
-		
+
 		return errorMessage;
 	}
 
 	private boolean validateReceivers() {
-		
+
 		for (String email : attachmentMessage.getReceivers()) {
-		
-			if (!isValidEmail(email)) {		
+
+			if (!isValidEmail(email)) {
 				errorMessage = "Ungültige EMail: " + email;
 				return false;
 			}
@@ -46,20 +46,20 @@ public class EmailValidator implements Validator {
 		return true;
 	}
 
-	private boolean validateAttachement(){
-		
-		for(File currentFile : attachmentMessage.getAttachments()){
+	private boolean validateAttachement() {
+
+		for (File currentFile : attachmentMessage.getAttachments()) {
 			String fileName = currentFile.getName();
 			int i = fileName.lastIndexOf('.');
 			if (i > 0) {
-				String extension = fileName.substring(i + 1);	
+				String extension = fileName.substring(i + 1);
 				if (extension.equals("exe")) {
 					errorMessage = "Ungültiges File (erlaubt ist alles ausser .exe): " + fileName;
 					return false;
 				}
 			}
 
-			if(currentFile.length() > 1048576){
+			if (currentFile.length() > 1048576) {
 				errorMessage = "File ist grösser als 1MB: " + fileName;
 				return false;
 			}

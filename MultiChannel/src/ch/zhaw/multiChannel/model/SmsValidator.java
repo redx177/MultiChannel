@@ -18,27 +18,27 @@ public class SmsValidator implements Validator {
 	private String errorMessage;
 
 	public SmsValidator(Message message) {
-		
+
 		this.message = message;
 	}
 
 	public boolean isValid() {
-		
+
 		return validateReceivers() && validateMessage();
 	}
 
 	public String getErrorMessage() {
-		
+
 		return errorMessage;
 	}
 
 	private boolean validateReceivers() {
-		
+
 		String[] receivers = message.getReceivers();
-		
-		for(String receiver : receivers) {
+
+		for (String receiver : receivers) {
 			if (receiver == null || !ValidatorHelper.isInteger(receiver)) {
-				errorMessage = "Ungültiger Empfänger, nur Nummern erlaubt: " + receiver;
+				errorMessage = "Ungï¿½ltiger Empfï¿½nger, nur Nummern erlaubt: " + receiver;
 				return false;
 			}
 		}
@@ -47,14 +47,14 @@ public class SmsValidator implements Validator {
 	}
 
 	private boolean validateMessage() {
-		
+
 		int messageLength = message.getMessage().length();
-		
+
 		if (messageLength > 160) {
-			errorMessage = "Die Nachricht hat "+ messageLength +"/160 Zeichen.";
+			errorMessage = "Die Nachricht hat " + messageLength + "/160 Zeichen.";
 			return false;
 		}
-		
+
 		return true;
 	}
 }

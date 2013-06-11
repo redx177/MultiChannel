@@ -38,21 +38,21 @@ public class AttachmentMessagePage extends MessagePage {
 	}
 
 	public void show(String title) {
-		
+
 		super.show(title);
 	}
 
 	public Message getMessage() {
-		
+
 		String[] receivers = receiverText.getText().split(";");
 		String message = messageText.getText();
-		
+
 		if (!timeshiftBox.isSelected()) {
-		
+
 			return new AttachmentMessage(receivers, message, selectedFiles);
-	
+
 		} else {
-		
+
 			String date = dateTextField.getText();
 			String time = timeComboBox.getSelectedItem().toString();
 			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyyHH:mm");
@@ -66,7 +66,7 @@ public class AttachmentMessagePage extends MessagePage {
 	}
 
 	protected void loadSendTimePanel(JPanel panel) {
-		
+
 		JPanel sendTimePanel = new JPanel();
 		super.loadSendTimePanel(sendTimePanel);
 
@@ -79,21 +79,21 @@ public class AttachmentMessagePage extends MessagePage {
 	}
 
 	private void loadUploadPanel() {
-		
+
 		final JPanel uploadFormPanel = new JPanel();
 		uploadFormPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JButton button = new JButton("Upload");
 		uploadFormPanel.add(button);
 		uploadFormPanel.add(new JLabel(String.format("(Erlaubte Dateien: %s - max 1mb)", validAttachmentsText)));
 		button.addActionListener(new ActionListener() {
-		
+
 			public void actionPerformed(ActionEvent e) {
-			
+
 				JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(uploadPanel);
-				
+
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-				
+
 					selectedFiles.add(fc.getSelectedFile());
 					repaintUploadedPanel();
 				}
@@ -117,7 +117,7 @@ public class AttachmentMessagePage extends MessagePage {
 
 		/* Populating new panel.*/
 		for (File file : selectedFiles) {
-			
+
 			JPanel filePanel = new JPanel();
 			filePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			JButton removeButton = new JButton("x");
@@ -129,13 +129,13 @@ public class AttachmentMessagePage extends MessagePage {
 				private File file;
 
 				public void actionPerformed(ActionEvent e) {
-			
+
 					selectedFiles.remove(file);
 					repaintUploadedPanel();
 				}
 
 				private ActionListener init(File file) {
-					
+
 					this.file = file;
 					return this;
 				}
@@ -147,7 +147,7 @@ public class AttachmentMessagePage extends MessagePage {
 	}
 
 	public void setValidAttachmentsText(String validAttachmentsText) {
-	
+
 		this.validAttachmentsText = validAttachmentsText;
 	}
 }

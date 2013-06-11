@@ -22,12 +22,12 @@ import java.util.ArrayList;
 public class Sender {
 
 	public void send(Controller.PageType type, Message message) {
-		
+
 		String[] receivers = message.getReceivers();
 		int length = receivers.length;
 		String s = length == 1 ? "" : "s";
 		String joinedReceivers = receivers[0];
-		
+
 		for (int i = 1; i < length; i++) {
 			joinedReceivers += "\n - " + receivers[i];
 		}
@@ -39,8 +39,8 @@ public class Sender {
 	}
 
 	public void send(Controller.PageType type, AttachmentMessage attachmentMessage) {
-		
-		send(type, (Message)attachmentMessage);
+
+		send(type, (Message) attachmentMessage);
 
 		if (attachmentMessage.getAttachments().size() > 0) {
 			String s = attachmentMessage.getAttachments().size() == 1 ? "" : "s";
@@ -49,18 +49,18 @@ public class Sender {
 	}
 
 	private String getAttachmentsAsString(ArrayList<File> attachments) {
-		
+
 		String result = "";
-		
+
 		for (File file : attachments) {
-			result+= " - " + file.getName() + "\n";
+			result += " - " + file.getName() + "\n";
 		}
 
 		return result;
 	}
 
 	private String getTypeAsString(Controller.PageType type) {
-		
+
 		String typeDescription;
 		switch (type) {
 			case Sms:
