@@ -33,7 +33,7 @@ public class MessagePage implements Page {
 	private JButton sendButton = new JButton("Nachricht senden");
 	protected JCheckBox timeshiftBox = new JCheckBox("Zeit versetzt senden?");
 	protected JComboBox timeComboBox;
-	private JLabel receiverLabel = new JLabel("Empf�nger:");
+	private JLabel receiverLabel = new JLabel("Empfänger:");
 	private JLabel receiverInfoLabel = new JLabel("(separiert durch semikolon)");
 	protected JTextArea messageText = new JTextArea(15, 40);
 	protected JTextField receiverText = new JTextField(15);
